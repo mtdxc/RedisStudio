@@ -5,6 +5,21 @@
 #include "RedisResult.h"
 #include "AbstractRedisModel.h"
 
+void Output(const char* fmt, ...) {
+	char buff[256];
+	va_list vl;
+	va_start(vl, fmt);
+	int n = vsnprintf(buff, sizeof(buff) - 1, fmt, vl);
+	va_end(vl);
+	if (n > 0) {
+		if (buff[n - 1] != '\n'){
+			buff[n++] = '\n';
+			buff[n] = 0;
+		}
+		OutputDebugStringA(buff);
+	}
+}
+
 RedisClient::RedisClient() : m_bReConnect(true),m_bConnected(false),
 m_pClient(NULL)
 {    
@@ -189,8 +204,31 @@ redisReply* RedisClient::Command( const char* fmt, ... )
              //m_fnDisConnect(GetLastError());
         }
         m_bConnected = false;
-    }
-
+		}
+		else {
+			switch (reply->type)
+			{
+			case REDIS_REPLY_NIL:
+				Output("cmd %s reply nil", fmt);
+				break;
+			case REDIS_REPLY_STATUS:
+			case REDIS_REPLY_STRING:
+				Output("cmd %s reply %s", fmt, reply->str);
+				break;
+			case REDIS_REPLY_ERROR:
+				Output("cmd %s error %s", fmt, reply->str);
+				break;
+			case REDIS_REPLY_INTEGER:
+				Output("cmd %s reply %lld", fmt, reply->integer);
+				break;
+			case REDIS_REPLY_ARRAY:
+				Output("cmd %s reply %d elements", fmt, reply->elements);
+				break;
+			default:
+				Output("cmd %s reply type %d", fmt, reply->type);
+				break;
+			}
+		}
     return reply;
 }
 

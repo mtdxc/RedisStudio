@@ -11,7 +11,7 @@
 #include "../DBClient.h"
 
 class RedisResult;
- 
+void Output(const char* fmt, ...);
 class RedisClient : public DBClient
 {
 public:

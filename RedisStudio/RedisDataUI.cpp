@@ -660,14 +660,7 @@ void RedisDataUI::BackgroundWorkForRefreshKeys(void)
     
     for (int nodeIdx=0; nodeIdx<pParentNode->GetCountChild(); ++nodeIdx)
     {
-        std::string sep = ":";
-        std::size_t sepIdx = 0;
-        std::map<std::string, int> sepMap;
-        sepMap[":"] = 1;
-        sepMap["/"] = 0;
-        sepMap["|"] = 0;
-        sepMap["."] = 0;
-        sepMap["-"] = 0;
+        std::string sep = ":.";
 
         CTreeNodeUI *pKeyNode = (CTreeNodeUI*) pParentNode->GetChildNode(nodeIdx);
         
@@ -685,14 +678,19 @@ void RedisDataUI::BackgroundWorkForRefreshKeys(void)
         pKeyNode->SetItemText(newTitle);
 
         RedisClient::TSeqArrayResults results;
- 
         if (!cli->keys("*", results)) return;
-
+        RedisClient::TSeqArrayResults::const_iterator it = results.begin();
+        RedisClient::TSeqArrayResults::const_iterator itend = results.end();
+    if (1){
+        std::size_t sepIdx = 0;
+        std::map<std::string, int> sepMap;
+        sepMap[":"] = 1;
+        sepMap["/"] = 0;
+        sepMap["|"] = 0;
+        sepMap["."] = 0;
+        //sepMap["-"] = 0;
 
         /// 自动探测分割字符
-        RedisClient::TSeqArrayResults::const_iterator it    = results.begin();
-        RedisClient::TSeqArrayResults::const_iterator itend = results.end();
-
         for (it = results.begin(); it != itend && sepIdx < 10; ++it, ++sepIdx) {
             std::string theValue = *it;
             std::map<std::string, int>::iterator sepit = sepMap.begin();
@@ -711,6 +709,8 @@ void RedisDataUI::BackgroundWorkForRefreshKeys(void)
         }
         std::sort(vec.begin(), vec.end(), cmp); 
         sep = vec.begin()->first;
+        Output("use sep %s", sep.c_str());
+    }
 
         m_oKeyRoot[nodeIdx].clear();
         ReleaseObject(nodeIdx);
