@@ -13,7 +13,7 @@
 #include "rapidjson/reader.h"
 #include "rapidjson/prettywriter.h"    // for stringify JSON
 #include "rapidjson/stringbuffer.h"
-
+#include "Ini.h"
 #include "rapidxml/rapidxml.hpp"
 #include <rapidxml/rapidxml_utils.hpp>  
 #include <rapidxml/rapidxml_print.hpp>  
@@ -657,10 +657,9 @@ void RedisDataUI::BackgroundWorkForRefreshKeys(void)
     {
         Base::Thread::sleep(100);
     }
-    
     for (int nodeIdx=0; nodeIdx<pParentNode->GetCountChild(); ++nodeIdx)
     {
-        std::string sep = ":.";
+        std::string sep = GetIniStr("App", "sep", ":.");
 
         CTreeNodeUI *pKeyNode = (CTreeNodeUI*) pParentNode->GetChildNode(nodeIdx);
         
@@ -681,7 +680,7 @@ void RedisDataUI::BackgroundWorkForRefreshKeys(void)
         if (!cli->keys("*", results)) return;
         RedisClient::TSeqArrayResults::const_iterator it = results.begin();
         RedisClient::TSeqArrayResults::const_iterator itend = results.end();
-    if (1){
+    if (sep.empty()) {
         std::size_t sepIdx = 0;
         std::map<std::string, int> sepMap;
         sepMap[":"] = 1;
