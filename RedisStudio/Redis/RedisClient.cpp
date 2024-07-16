@@ -11,7 +11,7 @@ void Output(const char* fmt, ...) {
 	va_start(vl, fmt);
 	int n = vsnprintf(buff, sizeof(buff) - 1, fmt, vl);
 	va_end(vl);
-	if (n > 0) {
+	if (n > 0 && n < sizeof(buff)) {
 		if (buff[n - 1] != '\n'){
 			buff[n++] = '\n';
 			buff[n] = 0;

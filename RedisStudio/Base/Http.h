@@ -1,6 +1,6 @@
 ﻿#ifndef Base_Http_INCLUDED
 #define Base_Http_INCLUDED
-
+#include <string>
 #include "ScopedLock.h"
 
 namespace Base {

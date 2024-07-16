@@ -1,6 +1,6 @@
 ﻿#ifndef Base_CharacterSet_INCLUDED
 #define Base_CharacterSet_INCLUDED
-
+#include <string>
 namespace Base {
 
 class CharacterSet

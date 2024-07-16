@@ -4,7 +4,7 @@
 #include <string>
 #include <set>
 #include <list>
-
+#include <memory>
 #include "Base/Event.h"
 #include "Base/Thread.h"
 #include "Base/RunnableAdapter.h"

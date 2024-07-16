@@ -5,6 +5,7 @@
 #include <list>
 #include <map>
 #include <string>
+#include <memory>
 #include "../Base/Mutex.h"
 #include "ScopedRedisReply.h"
 #include "RedisModelFactory.h"
