@@ -117,9 +117,6 @@
     <ClCompile Include="Control\UIEdit.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>
-    <ClCompile Include="Control\UIFlash.cpp">
-      <Filter>Source Files\Control</Filter>
-    </ClCompile>
     <ClCompile Include="Control\UILabel.cpp">
       <Filter>Source Files\Control</Filter>
     </ClCompile>

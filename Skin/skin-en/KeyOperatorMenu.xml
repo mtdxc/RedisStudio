@@ -6,5 +6,6 @@
   <Menu>
     <!-- <MenuElement name="menu_key_rename" text="重命名" /> -->
     <MenuElement name="menu_key_del"    text="Delete" />
+    <MenuElement name="menu_keys_reload" text="Reload" />     
   </Menu>
 </Window>

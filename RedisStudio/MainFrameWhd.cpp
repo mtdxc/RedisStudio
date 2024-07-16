@@ -66,9 +66,11 @@ void CMainFrameWnd::InitWindow()
     m_pLayUnconect  = static_cast<CHorizontalLayoutUI*>(m_PaintManager.FindControl(_T("main_notice_fail")));
 
     /// 设置版本号
+  if (m_pVersionControl) {
     CDuiString theMsg = m_pVersionControl->GetText();
     theMsg.Replace(_T("$version"), _T(VERSION));
     m_pVersionControl->SetText(theMsg);
+  }
 
     for (int idx=0; idx<m_oTabContainer.GetSize(); ++idx)
     {

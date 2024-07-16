@@ -943,10 +943,19 @@ bool RedisDataUI::OnMenuClick( void* param )
     CDuiString name = pTEventUI->pSender->GetName();
     if (name == kDBOperatorReloadMenuName)
     {
+        int tag = 0;
+        CTreeNodeUI* pNode = m_pAssistNode;
+        while (pNode) {
+            if (pNode->GetTag() > 0) {
+                tag = pNode->GetTag() - 1;
+                break;
+            }
+            pNode = pNode->GetParentNode();
+        }
         m_setUpdateDbs.clear();
-        m_setUpdateDbs.insert(m_pAssistNode->GetTag() - 1);
+        m_setUpdateDbs.insert(tag);
         CTreeNodeUI* pParentNode = m_pRootNode;
-        CTreeNodeUI *pKeyNode = (CTreeNodeUI*) pParentNode->GetChildNode(m_pAssistNode->GetTag() - 1);
+        CTreeNodeUI *pKeyNode = (CTreeNodeUI*) pParentNode->GetChildNode(tag);
         /// 同步删除，数据量大时会卡顿
         DelChildNode(pKeyNode);
         m_bIsKeyRender = true;
