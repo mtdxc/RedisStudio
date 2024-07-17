@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "RedisHelpUI.h"
+#include "Ini.h"
 
 DUI_BEGIN_MESSAGE_MAP(RedisHelpUI, CNotifyPump)
 DUI_ON_MSGTYPE(DUI_MSGTYPE_CLICK,OnClick)
@@ -33,7 +34,8 @@ void RedisHelpUI::Initialize()
         // 忽略js错误
         pWebBrowser->put_Silent(true);
         if( pWebBrowser != NULL ) {
-            pWebBrowser->Navigate(L"http://redis.io/commands",NULL,NULL,NULL,NULL);  
+            std::wstring url = GetIniStrW("App", "HelpUrl", "https://redis.com.cn/commands.html");
+            pWebBrowser->Navigate(&url[0], NULL, NULL, NULL, NULL);
             //pWebBrowser->Navigate(L"about:blank",NULL,NULL,NULL,NULL); 
             pWebBrowser->Release();
         }
